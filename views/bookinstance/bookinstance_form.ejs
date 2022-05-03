@@ -1,0 +1,60 @@
+<%- include('../partials/header') -%>
+
+<h1><%= title %></h1>
+<form method="post" action="">
+    <div class="form-group">
+        <label for="book">Book: </label>
+        <select id="book" type="select" class="form-control" placeholder="Select book" 
+        name="book" required="true">
+        <% book_list.sort((a, b) => { %>
+            <% let textA = a.title.toUpperCase(); %>
+            <% let textB = b.title.toUpperCase(); %>
+            <% return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; %>
+        <% }); %>
+        <% book_list.forEach((book) => { %>
+            <option value="<%= book._id %>" 
+                <% if (locals.selected_book === book._id.toString()){ %>
+                    selected='true'
+                <% } %>
+            >
+            <%= book.title %>
+            </option>
+        <% }); %>
+        </select>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="imprint">Imprint: </label>
+        <input id="imprint" type="text" class="form-control" placeholder="Publisher and date information" 
+        name="imprint" required="true" value="<%= locals.bookinstance === undefined ? '' : bookinstance.imprint %>">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="due_back">Date when book available: </label>
+        <input id="due_back" type="date" class="form-control"
+        name="due_back" value="<%= locals.bookinstance === undefined ? '' : bookinstance.due_back_yyyy_mm_dd %>">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="status">Status: </label>
+        <select id="status" type="select" class="form-control" placeholder="Select status" 
+        name="status" required="true">
+            <option value="Maintenance">Maintenance</option>
+            <option value="Available">Available</option>
+            <option value="Loaned">Loaned</option>
+            <option value="Reserved">Reserved</option>
+        </select>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<% if (locals.errors) { %>
+    <ul>
+        <% errors.forEach((error) => { %>
+            <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<%- include('../partials/footer') -%>

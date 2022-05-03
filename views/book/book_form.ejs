@@ -1,0 +1,72 @@
+<%- include('../partials/header') -%>
+
+<h1><%= title %></h1>
+<form method="post" action="">
+    <div class="form-group">
+        <label for="title">Title: </label>
+        <input id="title" type="text" class="form-control" placeholder="Name of book" 
+        name="title" required="true" value="<%= locals.book === undefined ? '' : book.title %>">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="author">Author: </label>
+        <select id="author" class="form-control" type="select" placeholder="Select author" 
+        name="author" required="true">
+        <% authors.sort((a, b) => { %>
+            <% let textA = a.family_name.toUpperCase(); %>
+            <% let textB = b.family_name.toUpperCase(); %>
+            <% return (textA < textB) ? -1 : (textA > textB) ? 1 : 0; %>
+        <% }); %>
+        <% authors.forEach((author) => { %>
+            <% if (locals.book){ %>
+                <option value="<%= author._id %>" 
+                    <% if (author._id.toString() == book.author._id.toString() || author._id.toString() == book.author) { %>
+                        selected='true'
+                    <% } %>
+                > <%= author.name %></option>
+           <% } else { %>
+                <option value="<%= author._id %>"><%= author.name %></option>
+            <% }}); %>
+        </select>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="summary">Summary: </label>
+        <textarea id="summary" type="textarea" class="form-control" placeholder="Summary" 
+        name="summary" required="true"><%= locals.book === undefined ? '' : book.summary %></textarea>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="isbn">ISBN: </label>
+        <input id="isbn" type="text" class="form-control" placeholder="ISBN13" 
+        name="isbn" required="true" value="<%= locals.book === undefined ? '' : book.isbn %>">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="genre">Genre: </label>
+        <div>
+            <% genres.forEach((genre) => { %>
+                <div style="display: inline; padding-right: 10px;">
+                    <input type="checkbox" class="checkbox-input" name="genre" id="<%= genre._id %>" value="<%= genre._id %>" 
+                    <% if (genre.checked){ %>
+                        checked=""
+                    <% } %>
+                    >
+                    <label for="genre._id"><%= genre.name %></label>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<% if (locals.errors) { %>
+    <ul>
+        <% errors.forEach((error) => { %>
+            <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<%- include('../partials/footer') -%>

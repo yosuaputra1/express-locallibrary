@@ -1,0 +1,28 @@
+<%- include('../partials/header') -%>
+
+<h1><%= title %></h1>
+<p><strong>Do you really want to delete this BookInstance?</strong></p>
+<p><strong>ID: </strong><%= bookinstance._id %></p>
+<p><strong>Title: </strong><a href="<%= bookinstance.book.url %>"><%= bookinstance.book.title %></a></p>
+<p><strong>Imprint: </strong><%= bookinstance.imprint %></p>
+<p><strong>Status: </strong>
+    <% if (bookinstance.status == 'Available') { %>
+        <span class="text-success"><%= bookinstance.status %></span>
+    <% } else if (bookinstance.status == 'Maintenance') { %>
+        <span class="text-danger"><%= bookinstance.status %></span>
+    <% } else { %>
+        <span class="text-warning"><%= bookinstance.status %></span>
+    <% } %>
+    <% if (bookinstance.status != 'Available') { %>
+        <p><strong>Due back: </strong><%= bookinstance.due_back_formatted %></p>
+    <% } %>
+</p>
+
+<form action="" method="post">
+    <div class="form-group">
+        <input id="id" type="hidden" name="id" required="true" value="<%= bookinstance._id %>">
+    </div>
+    <button class="btn btn-primary" type="submit">Delete</button>
+</form>
+
+<%- include('../partials/footer') -%>
