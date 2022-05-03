@@ -13,10 +13,10 @@
         <% }); %>
         <% book_list.forEach((book) => { %>
             <option value="<%= book._id %>" 
-                <% if (locals.selected_book === book._id.toString()){ %>
-                    selected='true'
+                <% if (locals.selected_book == book._id.toString()){ %>
+                    selected=""
                 <% } %>
-            >
+            >  
             <%= book.title %>
             </option>
         <% }); %>
@@ -39,10 +39,26 @@
         <label for="status">Status: </label>
         <select id="status" type="select" class="form-control" placeholder="Select status" 
         name="status" required="true">
-            <option value="Maintenance">Maintenance</option>
-            <option value="Available">Available</option>
-            <option value="Loaned">Loaned</option>
-            <option value="Reserved">Reserved</option>
+            <option value="Maintenance" 
+                <% if (locals.bookinstance !== undefined && locals.bookinstance.status == 'Maintenance'){ %>
+                    selected=""
+                <% } %>
+            >Maintenance</option>
+            <option value="Available"
+                <% if (locals.bookinstance !== undefined && locals.bookinstance.status == 'Available'){ %>
+                    selected=""
+                <% } %>
+            >Available</option>
+            <option value="Loaned" 
+                <% if (locals.bookinstance !== undefined && locals.bookinstance.status == 'Loaned'){ %>
+                    selected=""
+                <% } %>
+            >Loaned</option>
+            <option value="Reserved" 
+                <% if (locals.bookinstance !== undefined && locals.bookinstance.status == 'Reserved'){ %>
+                    selected=""
+                <% } %>
+            >Reserved</option>
         </select>
     </div>
     <br>
