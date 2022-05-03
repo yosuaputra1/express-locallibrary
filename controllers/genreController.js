@@ -1,6 +1,6 @@
-var Genre = require('../models/genre');
+const Genre = require('../models/genre');
 const Book = require('../models/book');
-var async = require('async');
+const async = require('async');
 const { body, validationResult } = require('express-validator');
 const { nextTick } = require('async');
 
@@ -56,7 +56,7 @@ exports.genre_create_post = [
         const errors = validationResult(req);
 
         // Create a genre object with escaped and trimmed data.
-        var genre = new Genre(
+        const genre = new Genre(
             { name: req.body.name }
         );
 
@@ -171,7 +171,7 @@ exports.genre_update_post = [
         const errors = validationResult(req);
 
         // Create a genre object with escaped and trimmed data (and the old id!)
-        var genre = new Genre(
+        const genre = new Genre(
             {
                 name: req.body.name,
                 _id: req.params.id

@@ -1,4 +1,4 @@
-var BookInstance = require('../models/bookinstance');
+const BookInstance = require('../models/bookinstance');
 const Book = require('../models/book');
 const { body, validationResult } = require('express-validator');
 const async = require('async');
@@ -22,7 +22,7 @@ exports.bookinstance_detail = function (req, res, next) {
         .exec(function (err, bookinstance) {
             if (err) { return next(err); }
             if (bookinstance == null) { // No results.
-                var err = new Error('Book copy not found');
+                let err = new Error('Book copy not found');
                 err.status = 404;
                 return next(err);
             }
@@ -155,7 +155,7 @@ exports.bookinstance_update_post = [
         const errors = validationResult(req);
 
         // Create a BookInstance object with escaped/trimmed data and current id.
-        var bookinstance = new BookInstance(
+        const bookinstance = new BookInstance(
             {
                 book: req.body.book,
                 imprint: req.body.imprint,
